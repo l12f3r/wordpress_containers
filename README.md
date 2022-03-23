@@ -4,7 +4,13 @@ For this small project, I want to bring back the [lizferLinux Wordpress blog](ht
 
 ### 1. Creating the network environment
 
-A public VPC must be created, for the Wordpress web environment be accessed. This is quite similar to what I did on the [PostgreSQL on Terraform challenge](https://github.com/l12f3r/postgresql-rds-dbeaver#1-preparing-the-environment-and-vpc): I'll use a Terraform module to obtain predefined network settings. On `main.tf`, the following code must be set:
+A public VPC must be created, for the Wordpress web environment be accessed. This is quite similar to what I did on the [PostgreSQL on Terraform challenge](https://github.com/l12f3r/postgresql-rds-dbeaver#1-preparing-the-environment-and-vpc): I'll use a Terraform module to obtain predefined network settings. 
+
+- `providers.tf` contains data on the cloud services provider and region; 
+- `variables.tf` has all variables declared; 
+- `parameters.auto.tfvars` has all data to avoid hardcoding.
+
+On `main.tf`, our main code file, we'll define networking by the following lines:
 
 ```terraform
 #main.tf
