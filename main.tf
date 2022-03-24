@@ -14,7 +14,6 @@ module "vpc" {
   name = var.vpcName
   cidr = var.vpcCIDRBlock
   azs = data.aws_availability_zones.azs.names
-  private_subnets = var.privSubCIDRBlocks 
   public_subnets = var.pubSubCIDRBlocks 
   enable_dns_hostnames = true
   enable_dns_support = true

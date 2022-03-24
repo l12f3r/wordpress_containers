@@ -17,8 +17,3 @@ variable "pubSubCIDRBlocks" {
   type = list(string)
   description = "CIDR Block for the public subnet"
 }
-
-variable "privSubCIDRBlocks" {
-  type = list(string)
-  description = "CIDR Block for the private subnet"
-}
