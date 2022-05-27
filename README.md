@@ -80,5 +80,38 @@ resource "aws_default_vpc" "vpc" {
 }
 ```
 
+### 3. Creating the security group
 
+Once again, I am using a default resource (`default_security_group`) in order to keep things simple and use the default security group. Whenever this resource is used, it removes all ingress and egress rules for the SG and adopts the rules stated on this code.
 
+HTTP and HTTPS ingress rules have public `cidr_blocks` values, but only for testing purposes - on a production environment, such values must be switched to a specific range of IP addresses.
+
+```terraform
+#main.tf
+resource "aws_default_security_group" "sg" {
+  vpc_id = aws_default_vpc.vpc.id
+
+  ingress {
+    protocol  = "tcp"
+    from_port = 22
+    to_port   = 22
+    cidr_blocks = var.shSSHCIDRBlock
+  }
+
+  ingress {
+    protocol  = "tcp"
+    self      = true
+    from_port = 443
+    to_port   = 443
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol  = "tcp"
+    self      = true
+    from_port = 80
+    to_port   = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
