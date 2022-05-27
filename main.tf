@@ -1,12 +1,3 @@
-data "aws_availability_zones" "azs" {
-  all_availability_zones = true
-
-  filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
-  }
-}
-
 resource "aws_iam_user" "admin_ecs_user" {
   name = "Administrator"
 }
@@ -43,14 +34,18 @@ resource "aws_iam_group_membership" "admin_ecs_group_membership" {
   group = aws_iam_group.admin_ecs_user_group.name
 }
 
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
-  version = "2.77.0"
+data "aws_availability_zones" "azs" {
+  all_availability_zones = true
 
-  name = var.vpcName
-  cidr = var.vpcCIDRBlock
-  azs = data.aws_availability_zones.azs.names
-  public_subnets = var.pubSubCIDRBlocks 
-  enable_dns_hostnames = true
-  enable_dns_support = true
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
 }
+
+resource "aws_default_vpc" "vpc" {
+  tags = {
+    Name = "Default VPC for ECS usage"
+  }
+}
+
