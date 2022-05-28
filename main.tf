@@ -75,3 +75,12 @@ resource "aws_default_security_group" "sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_ecr_repository" "ecr_repo" {
+  name = "ECS ECR Repository"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}

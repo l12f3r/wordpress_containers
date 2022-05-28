@@ -115,3 +115,21 @@ resource "aws_default_security_group" "sg" {
   }
 }
 ```
+
+### 4. ECR repository provisioning
+
+The Docker images should be stored on an Elastic Container Registry repository. Those can be provided and configured on Terraform as well.
+
+Image tag mutability (define if images can be overwritten or not) and scan on push (configure image scans whenever images are pushed) are defined on the code excerpt below:
+
+```terraform
+#main.tf
+resource "aws_ecr_repository" "ecr_repo" {
+  name = "ECS ECR Repository"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+```
